@@ -74,8 +74,8 @@ func (q *CommentSearch) ByBot(isBot bool) *CommentSearch {
 	return q
 }
 
-func (q *CommentSearch) NestLevel(i int64) *CommentSearch {
-	setQueryNumeric(q.v, "nest_level", i)
+func (q *CommentSearch) NestLevel(i NumFilter) *CommentSearch {
+	q.v.Set("nest_level", i.String())
 	return q
 }
 
@@ -94,18 +94,18 @@ func (q *CommentSearch) RemovedByUser(removed bool) *CommentSearch {
 	return q
 }
 
-func (q *CommentSearch) ReplyDelay(seconds int64) *CommentSearch {
-	setQueryNumeric(q.v, "reply_delay", seconds)
+func (q *CommentSearch) ReplyDelay(seconds NumFilter) *CommentSearch {
+	q.v.Set("reply_delay", seconds.String())
 	return q
 }
 
-func (q *CommentSearch) Length(i int64) *CommentSearch {
-	setQueryNumeric(q.v, "length", i)
+func (q *CommentSearch) Length(i NumFilter) *CommentSearch {
+	q.v.Set("length", i.String())
 	return q
 }
 
-func (q *CommentSearch) Score(i int64) *CommentSearch {
-	setQueryNumeric(q.v, "score", i)
+func (q *CommentSearch) Score(i NumFilter) *CommentSearch {
+	q.v.Set("score", i.String())
 	return q
 }
 
@@ -144,23 +144,23 @@ func (q *CommentSearch) SubredditType(typ SubredditType) *CommentSearch {
 	return q
 }
 
-func (q *CommentSearch) GildedSilverTimes(i int64) *CommentSearch {
-	setQueryNumeric(q.v, "gid_1", i)
+func (q *CommentSearch) GildedSilverTimes(i NumFilter) *CommentSearch {
+	q.v.Set("gid_1", i.String())
 	return q
 }
 
-func (q *CommentSearch) GildedGoldTimes(i int64) *CommentSearch {
-	setQueryNumeric(q.v, "gid_2", i)
+func (q *CommentSearch) GildedGoldTimes(i NumFilter) *CommentSearch {
+	q.v.Set("gid_2", i.String())
 	return q
 }
 
-func (q *CommentSearch) GildedPlatinumTimes(i int64) *CommentSearch {
-	setQueryNumeric(q.v, "gid_3", i)
+func (q *CommentSearch) GildedPlatinumTimes(i NumFilter) *CommentSearch {
+	q.v.Set("gid_3", i.String())
 	return q
 }
 
-func (q *CommentSearch) GildedTimes(i int64) *CommentSearch {
-	setQueryNumeric(q.v, "gilded", i)
+func (q *CommentSearch) GildedTimes(i NumFilter) *CommentSearch {
+	q.v.Set("gilded", i.String())
 	return q
 }
 
@@ -184,8 +184,8 @@ func (q *CommentSearch) LinkFlair(flair string) *CommentSearch {
 
 func (q *CommentSearch) AsChart() *ChartQuery {
 	q.v.Set("output", "png")
-	return &ChartQuery {
-		v: q.v,
+	return &ChartQuery{
+		v:       q.v,
 		baseURL: commentSearchBaseURL,
 	}
 }

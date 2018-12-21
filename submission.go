@@ -146,13 +146,13 @@ func (q *SubmissionSearch) RemovedByUser(removed bool) *SubmissionSearch {
 	return q
 }
 
-func (q *SubmissionSearch) TitleLength(i int64) *SubmissionSearch {
-	setQueryNumeric(q.v, "title_length", i)
+func (q *SubmissionSearch) TitleLength(i NumFilter) *SubmissionSearch {
+	q.v.Set("title_length", i.String())
 	return q
 }
 
-func (q *SubmissionSearch) Score(i int64) *SubmissionSearch {
-	setQueryNumeric(q.v, "score", i)
+func (q *SubmissionSearch) Score(i NumFilter) *SubmissionSearch {
+	q.v.Set("score", i.String())
 	return q
 }
 
@@ -181,23 +181,23 @@ func (q *SubmissionSearch) SubredditType(typ SubredditType) *SubmissionSearch {
 	return q
 }
 
-func (q *SubmissionSearch) GildedSilverTimes(i int64) *SubmissionSearch {
-	setQueryNumeric(q.v, "gid_1", i)
+func (q *SubmissionSearch) GildedSilverTimes(i NumFilter) *SubmissionSearch {
+	q.v.Set("gid_1", i.String())
 	return q
 }
 
-func (q *SubmissionSearch) GildedGoldTimes(i int64) *SubmissionSearch {
-	setQueryNumeric(q.v, "gid_2", i)
+func (q *SubmissionSearch) GildedGoldTimes(i NumFilter) *SubmissionSearch {
+	q.v.Set("gid_2", i.String())
 	return q
 }
 
-func (q *SubmissionSearch) GildedPlatinumTimes(i int64) *SubmissionSearch {
-	setQueryNumeric(q.v, "gid_3", i)
+func (q *SubmissionSearch) GildedPlatinumTimes(i NumFilter) *SubmissionSearch {
+	q.v.Set("gid_3", i.String())
 	return q
 }
 
-func (q *SubmissionSearch) GildedTimes(i int64) *SubmissionSearch {
-	setQueryNumeric(q.v, "gilded", i)
+func (q *SubmissionSearch) GildedTimes(i NumFilter) *SubmissionSearch {
+	q.v.Set("gilded", i.String())
 	return q
 }
 
@@ -221,8 +221,8 @@ func (q *SubmissionSearch) LinkFlair(flair string) *SubmissionSearch {
 
 func (q *SubmissionSearch) AsChart() *ChartQuery {
 	q.v.Set("output", "png")
-	return &ChartQuery {
-		v: q.v,
+	return &ChartQuery{
+		v:       q.v,
 		baseURL: submissionSearchBaseURL,
 	}
 }

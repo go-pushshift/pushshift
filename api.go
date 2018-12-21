@@ -1,7 +1,6 @@
 package pushshift
 
 import (
-	"fmt"
 	"net/http"
 	"net/url"
 	"strings"
@@ -10,6 +9,7 @@ import (
 var Client http.Client
 
 type SubredditType uint
+
 const (
 	SubredditPublic = SubredditType(iota)
 	SubredditPrivate
@@ -20,6 +20,7 @@ const (
 )
 
 type GildedType uint
+
 const (
 	NotGilded      = GildedType(0)
 	GildedSilver   = GildedType(1)
@@ -53,39 +54,13 @@ func addQueryList(u url.Values, k string, v []string) {
 	news := strings.Join(v, ",")
 	prevs := u[k]
 	if len(prevs) == 0 {
-		u[k] = []string{ news }
+		u[k] = []string{news}
 	} else if len(prevs) == 1 {
 		if len(prevs[0]) == 0 {
 			u[k][0] = news
 		} else {
 			u[k][0] = prevs[0] + "," + news
 		}
-	}
-}
-
-func GreaterThan(i int64) int64 {
-	return i | 0x2000000000000000
-}
-
-func LessThan(i int64) int64 {
-	return i | 0x4000000000000000
-}
-
-func setQueryNumeric(u url.Values, key string, num int64) {
-	highBits := num >> 61
-
-	switch highBits {
-	case 0, 4:
-		// Identity number
-		u.Set(key, fmt.Sprintf("%d", num))
-	case 1, 5:
-		// Greater-than number
-		u.Set(key, fmt.Sprintf(">%d", num & 0x9FFFFFFFFFFFFFFF))
-	case 2, 6:
-		// Positive less-than number
-		u.Set(key, fmt.Sprintf("<%d", num & 0x9FFFFFFFFFFFFFFF))
-	default:
-		panic("integer overflow")
 	}
 }
 
